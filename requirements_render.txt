@@ -1,2 +1,2 @@
 pyTelegramBotAPI
-reguests
+requests==2.32.3
