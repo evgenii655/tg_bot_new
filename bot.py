@@ -4,7 +4,7 @@ from telebot import types
 import datetime
 import requests
 
-bot =telebot.Telebot(os.environ.get('BOT_TOKEN'))
+bot =telebot.TeleBot(os.environ.get('BOT_TOKEN'))
 
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
