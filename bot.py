@@ -36,15 +36,17 @@ def callback_inline(call):
         bot.send_message(call.message.chat.id, f"Сейчас {current_time}")
     elif call.data == 'say_hello':
         bot.send_message(call.message.chat.id, "И тебе привет, человек! 👋")
-    elif call.data == 'get_price':
-        bot.send_message(call.message.chat.id, "Секунду, запрашиваю курс... ⏳")
-        try:
-            response = requests.get("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd")
-            data = response.json()
-            price = data['bitcoin']['usd']
-            bot.send_message(call.message.chat.id, f"Текущий курс Биткоина: ${price:,} 🚀")
-        except:
-            bot.send_message(call.message.chat.id, "Ошибка! Не могу получить курс.")
+           elif call.data == 'get_price':
+            bot.send_message(call.message.chat.id, "Секунду, запрашиваю курс... ⏳")
+            try:
+                headers = {'User-Agent': 'Mozilla/5.0'}
+                response = requests.get("https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT", headers=headers)
+                data = response.json()
+                price = float(data['price'])
+                bot.send_message(call.message.chat.id, f"Текущий курс Биткоина: ${round(price, 2)} 🚀")
+            except Exception as e:
+                bot.send_message(call.message.chat.id, f"Ошибка при получении курса: {e}")        
+            
 
 @bot.message_handler(commands=['time'])
 def send_time(message):
